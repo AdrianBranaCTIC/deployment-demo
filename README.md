@@ -14,7 +14,7 @@
 
 ```sh
     helm repo add data-space-connector https://fiware.github.io/data-space-connector/
-    cd ../trust-anchor
+    cd trust-anchor
     helm template data-space-connector/trust-anchor --version 0.2.0 -f values.yaml --name-template=trust-anchor --namespace=trust-anchor --output-dir rendered
 ```
 
