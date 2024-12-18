@@ -3,6 +3,7 @@
 ```sh
     cd base-cluster
     mvn clean deploy
+    # Don´t forget to set the proper KUBECONFIG. You might deploy to an unwanted cluster elsewise.;)
     export KUBECONFIG=/home/stefanw/git/wistefan/deployment-demo/base-cluster/target/k3s.yaml
 
     # enable storage
@@ -13,11 +14,11 @@
 
 ```sh
     helm repo add data-space-connector https://fiware.github.io/data-space-connector/
-    cd trust-anchor
-    helm template data-space-connector/trust-anchor --version 2.2.0 -f values.yaml --name-template=trust-anchor --namespace=trust-anchor --output-dir rendered
+    cd ../trust-anchor
+    helm template data-space-connector/trust-anchor --version 0.2.0 -f values.yaml --name-template=trust-anchor --namespace=trust-anchor --output-dir rendered
 ```
 
-> :warning: Don´t forget to set the proper KUBECONFIG. You might deploy to an unwanted cluster elsewise.;)
+> :warning: REMEMBER, Don´t forget to set the proper KUBECONFIG. You might deploy to an unwanted cluster elsewise.;)
 
 Create namespace:
 ```sh
@@ -55,10 +56,10 @@ Create an identity for the consumer:
     # generate corresponding public key
     openssl ec -in consumer-identity/private-key.pem -pubout -out consumer-identity/public-key.pem
 
-    # create a (self-signed) certificate
+    # create a (self-signed) certificate, the password must be"test"
     openssl req -new -x509 -key consumer-identity/private-key.pem -out consumer-identity/cert.pem -days 360
 
-    # export the keystore
+    # export the keystore, the password must be "test"
     openssl pkcs12 -export -inkey consumer-identity/private-key.pem -in consumer-identity/cert.pem -out consumer-identity/cert.pfx -name didPrivateKey
 
     # check the contents
